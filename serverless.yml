@@ -1,0 +1,25 @@
+service: ApiNodeServer
+frameworkVersion: '3'
+plugins:
+    - serverless-offline
+    - serverless-plugin-typescript
+
+provider:
+    name: aws
+    runtime: nodejs18.x
+    region: ${opt:region, 'ap-northeast-2'}
+    lambdaHashingVersion: '20201221'
+    profile: neurabody
+    apiName: ApiNodeServer
+    environment:
+        STAGE: ${opt:stage, 'dev'}
+        REGION: ${opt:region, 'ap-northeast-2'}
+
+functions:
+    api:
+        handler: src/index.handler
+        events:
+            - http:
+                  path: /{proxy+}
+                  method: any
+                  # Assuming the default authorization is applied here
