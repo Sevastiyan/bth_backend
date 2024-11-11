@@ -1,27 +1,6 @@
-# mellowing-node-api-server
-
-    This is going to be the documentation for all of the components of the **API NODE SERVER**
-
-**TODO** General understanding of the Architecture:
-
-- [ ] Architecture
-
-**TODO** Setting up new data
-
-- [x] Documentation for creating tables
-- [x] Exposing API calls
-- [ ] Create the documentation for deployment
-
-**TODO** Features how to:
-
-- [ ] How do statistics work? 
-- [ ] How does Timer work?
-- [ ] How does MQTT Work?
-- [ ] How does 
-
 # Setting up new data mechanisms:
 
-## Create a new Table 
+## Create a new Table
 
 To create a new table please follow these steps and you will be good to go 🚀
 
@@ -59,20 +38,20 @@ function typeDefinition() {
 
 export const ExampleTable: StatisticsTable = new StatisticsTable(tableName, mainIndex, defineDataParam);
 ```
-The new table is created. 
+The new table is created.
 
 The main functionality for handling the AWS actions is done in the AWS controllers within the dataBase folder. If you want to figure out how it works, you can read the code there to see how the data is saved and updated.
 
-After this we have to set up the new table in the `/dataBase/index.ts` file that will control the exports in other applications and `/data/index.ts` that controls the api calls within the server. 
+After this we have to set up the new table in the `/dataBase/index.ts` file that will control the exports in other applications and `/data/index.ts` that controls the api calls within the server.
 
 ---
 
 ## Create api routes
 
-If for some reason, you want to expose the functionality of a server function to a user (eg. Get some statistics) you have to expose a REST API call in the `/routes/` folder. 
+If for some reason, you want to expose the functionality of a server function to a user (eg. Get some statistics) you have to expose a REST API call in the `/routes/` folder.
 
-Things to consider when exposing public API: 
-- Is the API call a function to perform an action? 
+Things to consider when exposing public API:
+- Is the API call a function to perform an action?
     - Retreive data
     - Analyse data
     - Perform actions on the data
@@ -100,9 +79,9 @@ const router = express.Router();
 export default router;
 
 ```
-Express needs to be added and the Router defined to controll the routes. 
+Express needs to be added and the Router defined to controll the routes.
 
-If the route is defined in a new file, we have to include the exported router in `~/app.ts`. 
+If the route is defined in a new file, we have to include the exported router in `~/app.ts`.
 ```typescript
 import example from '/routes/example.ts'
 //...
@@ -132,9 +111,9 @@ router.get('/query', (req, res) => {
 ```
 The query will be first evaluated using the built `checkDevice()` if the request was made to request device data. This is in order to check if the device is connected to the user and will be rejected if it is not. Other checks can be `checkUser()` for users, or `checkFromServer()` if the request is made from another Lambda in the server. This in particular is made to compare the token received from the lambda to authenticate the operation.
 
-When the check is confirmed then the actual operation can happen. 
+When the check is confirmed then the actual operation can happen.
 
-The operation can be built in the `/apis/`, or if more complex operations are needed, in a separate logic. 
+The operation can be built in the `/apis/`, or if more complex operations are needed, in a separate logic.
 
 After the operation is complete the data is returned to the user.
 
@@ -173,13 +152,13 @@ This will show up as a new API in the swagger API documentation as an executable
 
 ## Server Deployment
 
-To deploy the server we must first understand how the deployment is separated. The server can run in two instances `-prod` and `-dev` corresponding to production and development respectively. Both are working separately from one another, where devices who have been instated using the `dev` version of the app are tagged with the `dev` parameter in the `UserDeviceTable`. The same for `prod`. 
+To deploy the server we must first understand how the deployment is separated. The server can run in two instances `-prod` and `-dev` corresponding to production and development respectively. Both are working separately from one another, where devices who have been instated using the `dev` version of the app are tagged with the `dev` parameter in the `UserDeviceTable`. The same for `prod`.
 
-This separation allows the development server to act as an experimental server which doesnt interfere with the operations of the production server. 
+This separation allows the development server to act as an experimental server which doesnt interfere with the operations of the production server.
 
 **Both instances operate on the same database.**
 
-The commands for deployment work as follows: 
+The commands for deployment work as follows:
 1. Navigate to the folder of the server using any CLI which has npm, serverless installed in the environment
 2. Run the following commands:
 
@@ -187,8 +166,8 @@ DEV:
 
     backend-main\mellowing-node-api-server-main> npm run deploy:dev
 
-PROD: 
-    
+PROD:
+
     backend-main\mellowing-node-api-server-main> npm run deploy:prod
 
 These commands are instantiated in `package.json`
@@ -213,5 +192,5 @@ This will deploy the server to the Canada Central region on the local configurat
 *Please look at the Wiki under AWS Configurations and make sure that all of the setup is correct.
 
 
-# Groups: 
+# Groups:
 
