@@ -18,10 +18,6 @@ export const API_ERROR_CODE = {
     TOKEN_EXPIRED: -31,
     TOKEN_INVALID: -32,
 
-    INVALID_STORE: -41,
-    INVALID_ITEM: -42,
-    ITEM_ALREADY_PURCHASED: -43,
-
     LINK_NOT_MATCHED_TYPE: -51,
 
     DEVICE_CANNOT_COM: -100,
@@ -42,4 +38,32 @@ export const DEVICE_PASS_KEY = [0x66, 0x39]
 export const USER_PLACE_PERM = {
     master: 1,
     user: 0,
+}
+
+export const GROUP_MEMBER_ROLE = {
+    admin: 1,
+    member: 0,
+}
+
+export const MEMBERSHIP_STATUS = [
+    {
+        name: 'basic',
+        limit: 1,
+        size: 2,
+    },
+    {
+        name: 'standard',
+        limit: 1,
+        size: 4,
+    },
+    {
+        name: 'extended',
+        limit: 1,
+        size: 10,
+    },
+]
+
+export const OTA_STATUS_TYPE = {
+    canUpdate: 'canUpdate',
+    cannotUpdate: 'cannotUpdate',
 }

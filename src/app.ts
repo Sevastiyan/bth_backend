@@ -6,7 +6,9 @@ import { specs, swaggerOption } from './module/swagger'
 import { RespSuccess } from './resp'
 import { requestLoger } from './module/utils/loger'
 
-//------  routers ------//
+/* -------------------------------------------------------------------------- */
+/*                                   Routers                                  */
+/* -------------------------------------------------------------------------- */
 import user from './routes/user'
 
 const app = express()
@@ -15,6 +17,7 @@ app.use(express.json())
 // app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true }))
 
+/* --------------------------------- Swagger -------------------------------- */
 app.use(
     '/api-docs',
     (req, res, next) => {
@@ -25,15 +28,12 @@ app.use(
     swaggerUi.setup(specs, swaggerOption),
 )
 
-// app.use('/stores', stores) // Public endpoint
-// Public route example
+/* ------------------------------ Public Routes ----------------------------- */
 app.use('/public', (req, res) => {
     res.json({ message: 'This is a public endpoint and does not require authentication.' })
 })
 
-// QR route (assuming it doesn't need authentication)
-
-// Authentication middleware
+/* ------------------------ Authentication middleware ----------------------- */
 app.use((req, res, next) => {
     // Skip authentication for specific routes
     if (req.path.startsWith('/public') || req.path.startsWith('/api-docs')) {
@@ -53,6 +53,7 @@ app.use((req, res, next) => {
         })
 })
 
+/* -------------------------- Authenticated Routes -------------------------- */
 app.use(requestLoger)
 app.use('/user', user)
 

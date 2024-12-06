@@ -9,7 +9,7 @@ provider:
     runtime: nodejs18.x
     region: ${opt:region, 'ap-northeast-2'}
     lambdaHashingVersion: '20201221'
-    profile: neurabody
+    profile: bth
     apiName: ApiNodeServer
     environment:
         STAGE: ${opt:stage, 'dev'}

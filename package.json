@@ -1,5 +1,5 @@
 {
-    "name": "ecoeats-api-node-server",
+    "name": "bth-api-node-server",
     "version": "0.1.0",
     "description": "This is going to be the documentation for all of the components of the **API NODE SERVER**",
     "main": "index.js",

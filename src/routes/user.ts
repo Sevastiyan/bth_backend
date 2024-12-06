@@ -1,5 +1,5 @@
 import * as express from 'express'
-import { user } from '../module/apis'
+import { user, relation } from '../module/apis'
 import { checkUser } from '../module/permission'
 
 /**
@@ -170,25 +170,15 @@ router.post('/update', (req, res) => {
 /**
  *  @swagger
  *  paths:
- *   /user/update/favorite:
- *     post:
- *       summary: Update user favorite store
+ *   /user/get/device:
+ *     get:
+ *       summary: 유저데이터 수집
  *       tags: [User]
- *       requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: string
- *                 item:
- *                   type: object
- *               example:
- *                 id: userId
- *                 item:
- *                   store_id: storeId
+ *       parameters:
+ *         - in: query
+ *           name: id
+ *           schema:
+ *             type: string
  *       responses:
  *         "200":
  *           content:
@@ -201,34 +191,15 @@ router.post('/update', (req, res) => {
  *               schema:
  *                 $ref: '#/components/schemas/ApiFail'
  */
-
-router.post('/update/favorite', async (req, res) => {
+router.get('/get/device', async (req, res) => {
     const authId = res.locals.user
-    const { id, item } = req.body
-    console.log('Updating favorite store: ', item)
+    const id = req.query.id as string
     try {
         await checkUser({ authUId: authId, reqId: id })
-        const request: any = await user.readData(id)
-
-        if (!request?.data?.length) {
-            return res.status(404).json({ error: 'No user found in the database' })
-        }
-
-        const requestUser = request.data
-        console.log('User Found: ', requestUser)
-
-        if (item.store_id) {
-            if (!requestUser.favoriteStores) {
-                requestUser.favoriteStores = []
-            }
-            requestUser.favoriteStores.push(item.store_id)
-        }
-
-        console.log('User Found: ', requestUser)
-        await user.updateData(id, { favoriteStores: requestUser.favoriteStores })
-        res.status(200).json(requestUser)
+        const apiResult = await relation.queryByIdAll(id)
+        res.status(200).json(apiResult)
     } catch (error) {
-        console.log('/create error, Failed to create item')
+        console.log('Permission denied, need admin access')
         res.status(401).json(error)
     }
 })

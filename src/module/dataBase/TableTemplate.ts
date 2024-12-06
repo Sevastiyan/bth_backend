@@ -4,7 +4,7 @@ import * as AwsCrudFunctions from './AwsCrudFunctions'
  * A class to create a custom table in AWS DynamoDB
  */
 
-export class Table {
+export class TableTemplate {
     tableName: string
     mainIndex: { pKey: string; sKey: string }
     defineDataParam: AwsCrudFunctions.DefineDataParam

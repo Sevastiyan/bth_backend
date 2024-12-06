@@ -60,13 +60,13 @@ const options = {
             },
         ],
         info: {
-            title: '[EcoEats] Official API Documentation',
+            title: '[BTH] Official API Documentation',
             version: '1.0.0',
             description: 'This document defines the API related to ECO_EATS.',
         },
         contact: {
-            name: 'EcoEats-API',
-            email: 'contact@ecoeats.com',
+            name: 'BTH-API',
+            email: 'sevastitan@neurabody.com',
         },
         servers: [...myServer.baseUrls],
     },
@@ -75,7 +75,7 @@ const options = {
 
 export const swaggerOption = {
     customCss: '.swagger-ui .topbar { display: none }',
-    customSiteTitle: 'EcoEats-API',
+    customSiteTitle: 'BTH-API',
     swaggerOptions: {
         oauth2RedirectUrl: myServer.redirectUrl,
     },
