@@ -1,5 +1,5 @@
 import * as AwsCrudFunctions from './AwsCrudFunctions'
-import { Table } from './Table'
+import { TableTemplate } from './TableTemplate'
 
 const tableName = 'LogerTable'
 
@@ -50,4 +50,4 @@ function typeDefinition() {
     }
 }
 
-export const logerTable = new Table(tableName, mainIndex, defineDataParam)
+export const logerTable = new TableTemplate(tableName, mainIndex, defineDataParam)

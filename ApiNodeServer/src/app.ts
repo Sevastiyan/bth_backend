@@ -10,6 +10,9 @@ import { requestLoger } from './module/utils/loger'
 /*                                   Routers                                  */
 /* -------------------------------------------------------------------------- */
 import user from './routes/user'
+import cert from './routes/cert'
+import device from './routes/device'
+import relations from './routes/relations'
 
 const app = express()
 app.use(cors())
@@ -56,5 +59,8 @@ app.use((req, res, next) => {
 /* -------------------------- Authenticated Routes -------------------------- */
 app.use(requestLoger)
 app.use('/user', user)
+app.use('/cert', cert)
+app.use('/device', device)
+app.use('/relations', relations)
 
 export default app

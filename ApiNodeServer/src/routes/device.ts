@@ -97,9 +97,9 @@ router.post('/register', async (req, res) => {
     const d_id = item.id
     try {
         await checkUser({ authUId: authId, reqId: u_id })
-        await deviceLogTable.createData({
-            id: d_id,
-        })
+        // await deviceLogTable.createData({
+        //     id: d_id,
+        // }) // Create a record in deviceLogTable
         await removeRelations(d_id)
         await cert.activateDeviceCert(d_id)
         // Led and Manual should be on by default

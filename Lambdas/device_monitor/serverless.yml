@@ -1,0 +1,74 @@
+service: device_monitor
+
+frameworkVersion: '3'
+
+custom:
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'ap-northeast-2'}
+  server: 'ApiNodeServer'
+  environment:
+    SR_NAME:
+      prod: 'DEVICE_REPORT_PROD'
+      dev: 'DEVICE_REPORT_DEV'
+    SR_SQL:
+      prod: "SELECT * FROM '$aws/things/+/sm/sensor/outTopicProd'"
+      dev: "SELECT * FROM '$aws/things/+/sm/sensor/outTopicDev'"
+    WU_NAME:
+      prod: 'DEVCIE_WAKE_UP_PROD'
+      dev: 'DEVCIE_WAKE_UP_DEV'
+    WU_SQL:
+      prod: "SELECT * FROM '$aws/things/+/sm/sensor/wakeUpTopicProd'"
+      dev: "SELECT * FROM '$aws/things/+/sm/sensor/wakeUpTopicDev'"
+    RD_NAME:
+      prod: 'DEVICE_RESET_PROD'
+      dev: 'DEVICE_RESET_DEV'
+    RD_SQL:
+      prod: "SELECT * FROM '$aws/things/+/sm/sensor/resetTopicProd'"
+      dev: "SELECT * FROM '$aws/things/+/sm/sensor/resetTopicDev'"
+
+# Canada
+provider:
+  name: aws
+  runtime: nodejs18.x
+  lambdaHashingVersion: 20201221
+  memorySize: 256
+  region: ${self:custom.region}
+  profile: mellowing-canada
+  eventBridge:
+    useCloudFormation: true
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:*'
+        - 'dynamodb:*'
+        - 's3:*'
+      Resource: '*'
+  environment:
+    STAGE: ${self:custom.stage}
+    REGION: ${self:custom.region}
+    SERVER: ${self:custom.server}
+
+functions:
+  sensor-report:
+    handler: sensor_report/index.handler
+    events:
+      - iot:
+          name: ${self:custom.environment.SR_NAME.${self:custom.stage}}
+          sql: ${self:custom.environment.SR_SQL.${self:custom.stage}}
+  # device_wake_up:
+  #   handler: device_wake_up/index.handler
+  #   events:
+  #     - iot:
+  #         name: ${self:custom.environment.WU_NAME.${self:custom.stage}}
+  #         sql: ${self:custom.environment.WU_SQL.${self:custom.stage}}
+  # reset_device:
+  #   handler: reset_device/index.handler
+  #   # events:
+  #   #   - eventBridge:
+  #   #       schedule: rate(2 minutes)
+  #   #       input:
+  #   #         key1: value1
+  #   events:
+  #     - iot:
+  #         name: ${self:custom.environment.RD_NAME.${self:custom.stage}}
+  #         sql: ${self:custom.environment.RD_SQL.${self:custom.stage}}

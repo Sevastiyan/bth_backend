@@ -1,0 +1,22 @@
+{
+    "name": "device_monitor",
+    "version": "1.0.0",
+    "description": "",
+    "main": "sensor_report/index.js",
+    "scripts": {
+        "serverless": "serverless",
+        "deploy:dev": "npm run serverless deploy -- --stage dev --region ap-northeast-2",
+        "deploy:prod": "npm run serverless deploy -- --stage prod --region ap-northeast-2"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "aws-sdk": "^2.1615.0",
+        "Base64": "^1.3.0",
+        "crypto-js": "^4.1.1",
+        "fast-csv": "^4.3.6"
+    },
+    "devDependencies": {
+        "serverless": "^3.33.0"
+    }
+}

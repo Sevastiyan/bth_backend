@@ -87,15 +87,6 @@ function getErrorMessage(code: number): string {
         case API_ERROR_CODE.GROUP_NAME_UNIQUE:
             message = 'group name must be unique'
             break
-        case API_ERROR_CODE.INVALID_STORE: // code: -41
-            message = 'the store provided is invalid'
-            break
-        case API_ERROR_CODE.INVALID_ITEM: // code: -42
-            message = 'the item provided is invalid'
-            break
-        case API_ERROR_CODE.ITEM_ALREADY_PURCHASED: // code: -43
-            message = 'item is already purchased by the user'
-            break
         default:
             message = 'default'
             break

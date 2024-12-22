@@ -62,7 +62,7 @@ const options = {
         info: {
             title: '[BTH] Official API Documentation',
             version: '1.0.0',
-            description: 'This document defines the API related to ECO_EATS.',
+            description: 'This document defines the API related to BTH.',
         },
         contact: {
             name: 'BTH-API',
